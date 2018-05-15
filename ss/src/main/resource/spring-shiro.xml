@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <cache:annotation-driven/>
+
+    <bean id="shiroDbRealm" class="com.emart.web.ShiroDBRealm"></bean>
+
+    <!--&lt;!&ndash;自定义form认证过滤器&ndash;&gt;-->
+    <!--<bean id="formAuthenticationFilter"-->
+    <!--class="com.lx.shiro.CustomFromAuthenticationFilter">-->
+    <!--&lt;!&ndash; 表单中账号的input名称 &ndash;&gt;-->
+    <!--<property name="usernameParam" value="username" />-->
+    <!--&lt;!&ndash; 表单中密码的input名称 &ndash;&gt;-->
+    <!--<property name="passwordParam" value="password" />-->
+    <!--&lt;!&ndash;记住我input的名称&ndash;&gt;-->
+    <!--<property name="rememberMeParam" value="rememberMe"/>-->
+    <!--</bean>-->
+
+
+    <bean id="cacheManager"
+          class="org.springframework.cache.concurrent.ConcurrentMapCacheManager"/>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroDbRealm"></property>
+        <property name="cacheManager" ref="shiroEhcacheManager"></property>
+        <property name="sessionManager" ref="sessionManager" />
+        <!-- 记住我 -->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+
+    </bean>
+
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒 -->
+        <property name="globalSessionTimeout" value="600000"/>
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+    </bean>
+
+
+    <!-- rememberMeManager管理器 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+    <property name="cookie" ref="rememberMeCookie" />
+    </bean>
+
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    <!--rememberMe时cookie的名字-->
+    <constructor-arg value="rememberMe" />
+    <!-- 记住我cookie生效时间30天 -->
+    <property name="maxAge" value="2592000" />
+    </bean>
+
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
+
+    </bean>
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="loginUrl" value="/login.do" ></property>
+        <property name="successUrl" value="/login.do" ></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /test/** = anon
+                /a/** = user
+                /** = auth
+            </value>
+        </property>
+    </bean>
+    <bean id="lefrCycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lefrCycleBeanPostProcessor"></bean>
+    <!-- 	<context:annotation-config /> -->
+    <!--     <mvc:annotation-driven/> -->
+</beans>
