@@ -109,6 +109,7 @@ public class JsonMapper {
     }
 
     public <T> List<T> fromJsonToList(String jsonString, Class<T> clazz) {
+        
         List<T> objectList = new ArrayList<T>();
         if (jsonString.startsWith("[")) { //List
             JavaType javaType = constructParametricType(List.class, clazz);

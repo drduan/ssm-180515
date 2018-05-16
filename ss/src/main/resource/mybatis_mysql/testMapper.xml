@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.emart.dao.TestMapper">
     <!-- 打印缓存数据相关的日志 -->
-    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+    <!--<cache />-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache" >
+        <!-- 缓存创建以后，最后一次访问缓存的时间至失效的时间间隔 -->
+        <property name="timeToIdleSeconds" value="360"/>
+        <!-- 缓存自创建时间起至失效的时间间隔-->
+        <property name="timeToLiveSeconds" value="360"/>
+        <!-- 缓存回收策略，LRU移除近期最少使用的对象 -->
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
     <select id="select1" resultType="hashmap">
         select 1
         from da_gz;

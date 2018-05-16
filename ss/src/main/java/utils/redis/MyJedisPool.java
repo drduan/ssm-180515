@@ -54,7 +54,8 @@ public class MyJedisPool {
 
 	/** 归还jedis对象 */
 	public static void recycleJedisOjbect(Jedis jedis) {
-		pool.returnResource(jedis);
+		jedis.close();
+    //		pool.close();
 	}
 	
 	private static String buildKey(String key){  

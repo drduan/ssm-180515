@@ -4,7 +4,6 @@
        xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <cache:annotation-driven/>
 
     <bean id="shiroDbRealm" class="com.emart.web.ShiroDBRealm"></bean>
 
@@ -23,14 +22,14 @@
     <bean id="cacheManager"
           class="org.springframework.cache.concurrent.ConcurrentMapCacheManager"/>
 
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroDbRealm"></property>
-        <property name="cacheManager" ref="shiroEhcacheManager"></property>
-        <property name="sessionManager" ref="sessionManager" />
+    <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
+        <!--<property name="realm" ref="shiroDbRealm"></property>-->
+        <!--<property name="cacheManager" ref="shiroEhcacheManager"></property>-->
+        <!--<property name="sessionManager" ref="sessionManager"/>-->
         <!-- 记住我 -->
-        <property name="rememberMeManager" ref="rememberMeManager"/>
+        <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
 
-    </bean>
+    <!--</bean>-->
 
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
@@ -43,36 +42,35 @@
 
     <!-- rememberMeManager管理器 -->
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
-    <property name="cookie" ref="rememberMeCookie" />
+        <property name="cookie" ref="rememberMeCookie"/>
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-    <!--rememberMe时cookie的名字-->
-    <constructor-arg value="rememberMe" />
-    <!-- 记住我cookie生效时间30天 -->
-    <property name="maxAge" value="2592000" />
+        <!--rememberMe时cookie的名字-->
+        <constructor-arg value="rememberMe"/>
+        <!-- 记住我cookie生效时间30天 -->
+        <property name="maxAge" value="2592000"/>
     </bean>
 
-    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
-
-    </bean>
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager"></property>
-        <property name="loginUrl" value="/login.do" ></property>
-        <property name="successUrl" value="/login.do" ></property>
-        <property name="filterChainDefinitions">
-            <value>
-                /test/** = anon
-                /a/** = user
-                /** = auth
-            </value>
-        </property>
-    </bean>
-    <bean id="lefrCycleBeanPostProcessor"
-          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lefrCycleBeanPostProcessor"></bean>
+    <!--<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+        <!--<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>-->
+    <!--</bean>-->
+    <!--<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
+        <!--<property name="securityManager" ref="securityManager"></property>-->
+        <!--<property name="loginUrl" value="/login.do"></property>-->
+        <!--<property name="successUrl" value="/login.do"></property>-->
+        <!--<property name="filterChainDefinitions">-->
+            <!--<value>-->
+                <!--/test/** = anon-->
+                <!--/a/** = user-->
+                <!--/** = auth-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="lefrCycleBeanPostProcessor"-->
+          <!--class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
+    <!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
+          <!--depends-on="lefrCycleBeanPostProcessor"/>-->
     <!-- 	<context:annotation-config /> -->
     <!--     <mvc:annotation-driven/> -->
 </beans>

@@ -1,12 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>  
-    <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<plugins>
-		<plugin interceptor="utils.page.PagePlugin">
-			<!-- 请修改此处：需改为实际使用的数据库方言名称 --> 
-			<property name="dialect" value="mysql"/>
-			<property name="pageSqlId" value=".*ByPage.*"/>
-		</plugin>
-	</plugins>
+
+    <!-- 设置settings -->
+    <settings>
+        <!-- 打印SQL -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <plugins>
+        <plugin interceptor="utils.page.PagePlugin">
+            <!-- 请修改此处：需改为实际使用的数据库方言名称 -->
+            <property name="dialect" value="mysql"/>
+            <property name="pageSqlId" value=".*ByPage.*"/>
+        </plugin>
+    </plugins>
 </configuration>

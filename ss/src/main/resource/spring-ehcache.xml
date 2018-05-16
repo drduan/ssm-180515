@@ -4,12 +4,12 @@
        xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
-    <cache:annotation-driven cache-manager="cacheManager" />
+    <cache:annotation-driven cache-manager="cacheManager"/>
 
     <!-- cacheManager工厂类，指定ehcache.xml的位置 -->
     <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation"  value="classpath:ehcache.xml"/>
-        <property name="shared" value="true"></property>
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="shared" value="true"/>
     </bean>
 
     <!-- 声明cacheManager -->

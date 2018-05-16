@@ -19,52 +19,49 @@ import java.util.Map;
 @RequestMapping("/demo")
 public class TestController {
 
-    @Resource
-    TestService testService;
     @Autowired
-    ShiroDBRealm shiroDbRealm;
+    private  TestService testService;
+    @Autowired
+    private   ShiroDBRealm shiroDbRealm;
 
     @ResponseBody
-    @RequestMapping( "/" )
+    @RequestMapping("/")
     public String Index() {
         int i = 1;
-        return"sucess";
+        return "sucess";
     }
+
     @ResponseBody
-    @RequestMapping( "/index" )
+    @RequestMapping("/index")
     public Map Home() {
         int i = 1;
         return testService.findone();
     }
+
     @RequestMapping("shiroPage")
-    @RequiresPermissions(value = {"",""})
-    public ModelAndView index()
-    {
-        ModelAndView modelAndView = new ModelAndView("shiro/shiroPage")
-                ;
-        return  modelAndView;
+    @RequiresPermissions(value = {"", ""})
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("shiro/shiroPage");
+        return modelAndView;
     }
 
-@RequestMapping("/clearCache")
+    @RequestMapping("/clearCache")
     //    权限修改生效后 立即刷新系统缓存 则可以实现用户不退出生效的新的权限
-    public Map clearCache(){
+    public Map clearCache() {
         //获取所有用户session信息
         PrincipalCollection principalCollections = SecurityUtils.getSubject().getPrincipals();
-    shiroDbRealm.clearCache(principalCollections);
+        shiroDbRealm.clearCache(principalCollections);
         return new HashMap();
     }
-    @RequestMapping(value = "index")
-    public String showIndex(){
-        return "index";
-    }
+
 
     @RequestMapping(value = "page-login")
-    public String showPageLogin(){
+    public String showPageLogin() {
         return "page-login";
     }
 
     @RequestMapping(value = "page-error")
-    public String showPageError(){
+    public String showPageError() {
         return "page-error";
     }
 
