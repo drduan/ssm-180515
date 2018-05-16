@@ -26,7 +26,7 @@
             overflowToDisk="false"
     />
 
-    <cache name="cacheTest"
+    <cache name="testController"
            eternal="false"
            maxEntriesLocalHeap="100000"
            timeToIdleSeconds="0"

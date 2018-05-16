@@ -2,6 +2,7 @@ package com.emart.service;
 
 
 import com.emart.dao.TestMapper;
+import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,9 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private TestMapper mapp;
 
-    @Cacheable(cacheNames = "cacheTest")
     public Map findone() {
         return mapp.select1();
+
     }
 
 

@@ -19,8 +19,6 @@
     <!--</bean>-->
 
 
-    <bean id="cacheManager"
-          class="org.springframework.cache.concurrent.ConcurrentMapCacheManager"/>
 
     <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">-->
         <!--<property name="realm" ref="shiroDbRealm"></property>-->
